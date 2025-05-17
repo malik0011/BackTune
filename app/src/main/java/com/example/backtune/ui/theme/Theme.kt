@@ -16,37 +16,26 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = DarkPrimary,
-    secondary = DarkSecondary,
-    tertiary = DarkPrimaryVariant,
-    background = Background,
-    surface = Surface,
-    error = Error,
-    onPrimary = OnPrimary,
-    onSecondary = OnSecondary,
-    onBackground = OnBackground,
-    onSurface = OnSurface,
-    onError = OnError
-)
-
-private val LightColorScheme = lightColorScheme(
-    primary = Primary,
-    secondary = Secondary,
-    tertiary = PrimaryVariant,
-    background = Background,
-    surface = Surface,
-    error = Error,
-    onPrimary = OnPrimary,
-    onSecondary = OnSecondary,
-    onBackground = OnBackground,
-    onSurface = OnSurface,
-    onError = OnError
+    primary = BackTuneColors.Primary,
+    onPrimary = BackTuneColors.TextPrimary,
+    primaryContainer = BackTuneColors.PrimaryVariant,
+    onPrimaryContainer = BackTuneColors.TextPrimary,
+    secondary = BackTuneColors.Secondary,
+    onSecondary = BackTuneColors.TextPrimary,
+    secondaryContainer = BackTuneColors.AccentGreen,
+    onSecondaryContainer = BackTuneColors.TextPrimary,
+    background = BackTuneColors.Background,
+    onBackground = BackTuneColors.TextPrimary,
+    surface = BackTuneColors.Surface,
+    onSurface = BackTuneColors.TextPrimary,
+    error = BackTuneColors.AccentRed,
+    onError = BackTuneColors.TextPrimary
 )
 
 @Composable
 fun BackTuneTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
+    darkTheme: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -55,14 +44,14 @@ fun BackTuneTheme(
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
         darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        else -> DarkColorScheme
     }
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+            window.statusBarColor = colorScheme.background.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
         }
     }
 

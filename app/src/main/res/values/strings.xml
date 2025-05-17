@@ -1,3 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">BackTune</string>
+    
+    <!-- Home Screen -->
+    <string name="home_title">Welcome to BackTune</string>
+    <string name="home_subtitle">Enhance your YouTube experience with ambient sounds</string>
+    <string name="youtube_url_hint">Paste YouTube video URL here</string>
+    <string name="play_button">Play Video</string>
+    
+    <!-- Player Screen -->
+    <string name="player_title">Now Playing</string>
+    <string name="background_sound">Background Sound</string>
+    <string name="volume_control">Volume Control</string>
+    
+    <!-- Sound Selection -->
+    <string name="sound_selection_title">Choose Ambient Sound</string>
+    <string name="select_sound">Select</string>
+    
+    <!-- Common -->
+    <string name="error_invalid_url">Please enter a valid YouTube URL</string>
+    <string name="error_loading">Error loading content</string>
 </resources>

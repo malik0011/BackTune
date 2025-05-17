@@ -20,4 +20,10 @@
     <!-- Common -->
     <string name="error_invalid_url">Please enter a valid YouTube URL</string>
     <string name="error_loading">Error loading content</string>
+    
+    <!-- Tips -->
+    <string name="tips_title">Tips for Best Experience</string>
+    <string name="tip_headphones">Use headphones for the best audio experience</string>
+    <string name="tip_volume">Adjust background sound volume to your preference</string>
+    <string name="tip_mix">Try different sounds to find your perfect mix</string>
 </resources>

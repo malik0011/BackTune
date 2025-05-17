@@ -1,7 +1,9 @@
 package com.example.backtune.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -9,16 +11,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.backtune.R
 import com.example.backtune.ui.theme.BackTuneColors
 import com.example.backtune.ui.theme.BackTuneTheme
 import com.example.backtune.util.Constants
+import com.example.backtune.viewmodel.MainViewModel
 
 /**
  * Home screen of the app where users can enter a YouTube URL
@@ -27,51 +31,41 @@ import com.example.backtune.util.Constants
 @Composable
 fun HomeScreen(
     onNavigateToPlayer: (String) -> Unit,
-    modifier: Modifier = Modifier
 ) {
     var videoUrl by remember { mutableStateOf("") }
-    var isError by remember { mutableStateOf(false) }
+    var showError by remember { mutableStateOf(false) }
     
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(BackTuneColors.Background)
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(24.dp)
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // App Logo/Title Section
-        Box(
+        // Logo and Title Section
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(120.dp)
-                .shadow(
-                    elevation = 8.dp,
-                    shape = RoundedCornerShape(24.dp)
-                )
-                .clip(RoundedCornerShape(24.dp))
-                .background(
-                    brush = Brush.linearGradient(BackTuneColors.PrimaryGradient)
-                ),
-            contentAlignment = Alignment.Center
+                .padding(vertical = 32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // App Logo
+            Image(
+                painter = painterResource(id = R.drawable.ic_backtune_logo),
+                contentDescription = "BackTune Logo",
+                modifier = Modifier
+                    .size(120.dp)
+                    .clip(CircleShape)
+            )
+            
             Text(
-                text = stringResource(R.string.app_name),
-                style = MaterialTheme.typography.headlineLarge.copy(
-                    fontWeight = FontWeight.Bold
-                ),
-                color = BackTuneColors.TextPrimary
+                text = stringResource(R.string.home_subtitle),
+                style = MaterialTheme.typography.bodyLarge,
+                color = BackTuneColors.TextSecondary,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(top = 8.dp)
             )
         }
-        
-        // Welcome Text
-        Text(
-            text = stringResource(R.string.home_subtitle),
-            style = MaterialTheme.typography.bodyLarge,
-            color = BackTuneColors.TextSecondary,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(vertical = 16.dp)
-        )
         
         Spacer(modifier = Modifier.height(32.dp))
         
@@ -102,11 +96,11 @@ fun HomeScreen(
                     value = videoUrl,
                     onValueChange = { 
                         videoUrl = it
-                        isError = false
+                        showError = false
                     },
-                    isError = isError,
+                    isError = showError,
                     supportingText = {
-                        if (isError) {
+                        if (showError) {
                             Text(
                                 text = stringResource(R.string.error_invalid_url),
                                 color = BackTuneColors.AccentRed
@@ -140,10 +134,10 @@ fun HomeScreen(
                     if (videoId != null) {
                         onNavigateToPlayer(videoId)
                     } else {
-                        isError = true
+                        showError = true
                     }
                 } else {
-                    isError = true
+                    showError = true
                 }
             },
             modifier = Modifier

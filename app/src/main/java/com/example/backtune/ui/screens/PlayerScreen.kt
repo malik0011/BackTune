@@ -22,6 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -84,8 +85,8 @@ fun PlayerScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(BackTuneColors.Background)
             .padding(16.dp)
+            .background(BackTuneColors.Background)
     ) {
         // Top Bar
         TopAppBar(
@@ -255,6 +256,10 @@ fun PlayerScreen(
                 }
             }
         }
+
+        // Add the tips card at the bottom
+        Spacer(modifier = Modifier.weight(1f))
+        UserTipsCard()
     }
 }
 
@@ -331,6 +336,81 @@ private fun SoundItem(
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun UserTipsCard() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = BackTuneColors.CardBackground.copy(alpha = 0.7f)
+        ),
+        shape = RoundedCornerShape(16.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Info,
+                    contentDescription = "Tips",
+                    tint = BackTuneColors.Primary
+                )
+                Text(
+                    text = "Tips for Best Experience",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = BackTuneColors.TextPrimary
+                )
+            }
+            
+            Spacer(modifier = Modifier.height(8.dp))
+            
+            // Tip items
+            TipItem(
+                icon = R.drawable.ic_headphone,
+                text = "Use headphones for the best audio experience"
+            )
+            TipItem(
+                icon = R.drawable.ic_volume_up,
+                text = "Adjust background sound volume to your preference"
+            )
+            TipItem(
+                icon = R.drawable.ic_lightbulb,
+                text = "Try different sounds to find your perfect mix"
+            )
+        }
+    }
+}
+
+@Composable
+private fun TipItem(
+    icon: Int,
+    text: String
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Image(
+            painter = painterResource(id = icon),
+            contentDescription = null,
+            colorFilter = ColorFilter.tint(BackTuneColors.TextSecondary),
+            modifier = Modifier.size(20.dp)
+        )
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyMedium,
+            color = BackTuneColors.TextSecondary
+        )
     }
 }
 

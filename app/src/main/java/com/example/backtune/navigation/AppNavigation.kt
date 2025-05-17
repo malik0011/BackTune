@@ -1,6 +1,7 @@
 package com.example.backtune.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -17,6 +18,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.example.backtune.viewmodel.MainViewModel
+import com.example.backtune.viewmodel.SharedIntentViewModel
 
 /**
  * Navigation routes for the app
@@ -35,8 +37,18 @@ sealed class Screen(val route: String) {
 @Composable
 fun AppNavigation(
     navController: NavHostController,
+    sharedIntentViewModel: SharedIntentViewModel,
     startDestination: String = Screen.Home.route
 ) {
+    val sharedVideoId by sharedIntentViewModel.sharedVideoId.collectAsState()
+    // React to shared intent
+    LaunchedEffect(sharedVideoId) {
+        if (sharedVideoId != null) {
+            navController.navigate(Screen.Player.createRoute(sharedVideoId!!))
+            sharedIntentViewModel.clear()
+        }
+    }
+
     NavHost(
         navController = navController,
         startDestination = startDestination

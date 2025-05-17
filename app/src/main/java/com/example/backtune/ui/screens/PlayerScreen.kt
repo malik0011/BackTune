@@ -62,6 +62,7 @@ import com.example.backtune.model.AmbientSound
 import com.example.backtune.ui.theme.BackTuneColors
 import com.example.backtune.ui.theme.BackTuneTheme
 import com.example.backtune.viewmodel.MainViewModel
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
@@ -81,6 +82,7 @@ fun PlayerScreen(
     val isLoading by viewModel.isLoading.collectAsState()
     
     var youTubePlayer by remember { mutableStateOf<YouTubePlayer?>(null) }
+    var currentPlayerPosition by remember { mutableStateOf<Float>(0f) }
 
     Column(
         modifier = Modifier
@@ -123,7 +125,13 @@ fun PlayerScreen(
                     addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
                         override fun onReady(player: YouTubePlayer) {
                             youTubePlayer = player
-                            player.loadVideo(videoId, 0f)
+                            player.loadVideo(videoId, currentPlayerPosition)
+                        }
+
+                        //update currentPlayerPosition when the video is playing
+                        override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) {
+                            super.onCurrentSecond(youTubePlayer, second)
+                            currentPlayerPosition = second
                         }
                     })
                 }
@@ -210,14 +218,39 @@ fun PlayerScreen(
                     )
                     
                     Spacer(modifier = Modifier.height(8.dp))
-                    Slider(
-                        value = volume,
-                        onValueChange = { viewModel.updateVolume(it) },
-                        colors = SliderDefaults.colors(
-                            thumbColor = BackTuneColors.Primary,
-                            activeTrackColor = BackTuneColors.Primary,
-                            inactiveTrackColor = BackTuneColors.TextTertiary
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_volume_down),
+                            contentDescription = "Volume",
+                            tint = BackTuneColors.TextSecondary,
+                            modifier = Modifier.size(20.dp)
                         )
+                        Slider(
+                            value = volume,
+                            onValueChange = { viewModel.updateVolume(it) },
+                            colors = SliderDefaults.colors(
+                                thumbColor = BackTuneColors.Primary,
+                                activeTrackColor = BackTuneColors.Primary,
+                                inactiveTrackColor = BackTuneColors.TextTertiary
+                            ),
+                            modifier = Modifier.weight(1f)
+                        )
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_volume_up),
+                            contentDescription = "Volume",
+                            tint = BackTuneColors.TextSecondary,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+                    Text(
+                        text = "Background Music Volume",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = BackTuneColors.TextSecondary,
+                        modifier = Modifier.padding(start = 4.dp)
                     )
                 }
             }

@@ -5,12 +5,16 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,6 +35,7 @@ import com.example.backtune.viewmodel.MainViewModel
 @Composable
 fun HomeScreen(
     onNavigateToPlayer: (String) -> Unit,
+    onNavigateToAbout: () -> Unit
 ) {
     var videoUrl by remember { mutableStateOf("") }
     var showError by remember { mutableStateOf(false) }
@@ -122,8 +127,10 @@ fun HomeScreen(
                 )
             }
         }
+
+        Spacer(modifier = Modifier.height(32.dp))
         
-        Spacer(modifier = Modifier.weight(1f))
+
         
         // Play Button
         Button(
@@ -142,6 +149,7 @@ fun HomeScreen(
             },
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(horizontal = 40.dp)
                 .height(56.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = BackTuneColors.Primary
@@ -154,6 +162,26 @@ fun HomeScreen(
                     fontWeight = FontWeight.SemiBold
                 )
             )
+        }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        // About Button
+        Button(
+            onClick = onNavigateToAbout,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = BackTuneColors.Primary
+            ),
+            shape = RoundedCornerShape(24.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Default.Info,
+                contentDescription = null,
+                tint = Color.White,
+                modifier = Modifier.size(20.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("About BackTune")
         }
     }
 }
@@ -174,7 +202,8 @@ private fun extractVideoId(url: String): String? {
 fun HomeScreenPreview() {
     BackTuneTheme {
         HomeScreen(
-            onNavigateToPlayer = {}
+            onNavigateToPlayer = {},
+            onNavigateToAbout = {}
         )
     }
 }

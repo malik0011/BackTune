@@ -17,7 +17,7 @@ BackTune is an Android application that enhances your YouTube viewing experience
 
 - 🎥 YouTube video playback with background ambient sounds
 - 🎵 Multiple ambient sound options (Rain, Waves, Forest, etc.)
-- �� Independent volume control for background sounds
+- 🎚️ Independent volume control for background sounds
 - 🌙 Modern dark theme UI
 - 🔄 Background sound looping
 - 🎨 Material 3 design with Jetpack Compose
@@ -46,7 +46,7 @@ BackTune is an Android application that enhances your YouTube viewing experience
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/BackTune.git
+git clone https://github.com/malik0011/BackTune.git
 ```
 
 2. Open the project in Android Studio
@@ -55,7 +55,7 @@ git clone https://github.com/yourusername/BackTune.git
 
 4. Run the app on your device or emulator
 
-## 📦 Project Structure 
+## 📦 Project Structure
 
 ## 🎨 UI/UX
 
@@ -89,7 +89,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Authors
 
-- Your Name - Initial work - [YourGitHub](https://github.com/yourusername)
+- Ayan Malik - Initial work - [@malik0011](https://github.com/malik0011)
 
 ## 🙏 Acknowledgments
 
@@ -98,14 +98,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Jetpack Compose
 - Material Design 3
 
-##  Contact
+## 📫 Contact
 
-Your Name - [@yourtwitter](https://twitter.com/yourtwitter)
+Ayan Malik - [@malik0011](https://github.com/malik0011)
 
-Project Link: [https://github.com/yourusername/BackTune](https://github.com/yourusername/BackTune)
+Project Link: [https://github.com/malik0011/BackTune](https://github.com/malik0011/BackTune)
 
 ---
 
 <div align="center">
-  Made with ❤️ by Your Name
+  Made with ❤️ by Ayan Malik
 </div> 

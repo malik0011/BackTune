@@ -27,11 +27,14 @@ class MainViewModel @Inject constructor(
     private val _isBackgroundPlaying = MutableStateFlow(false)
     val isBackgroundPlaying: StateFlow<Boolean> = _isBackgroundPlaying
 
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
     // Available sounds - make sure these match your raw resource names exactly
     val availableSounds = listOf(
-        AmbientSound("rain", "Rain", "rain"), // Should match rain.mp3 in raw folder
-        AmbientSound("waves", "Waves", "waves"), // Should match waves.mp3 in raw folder
-        AmbientSound("forest", "Forest", "forest") // Should match forest.mp3 in raw folder
+        AmbientSound("rain", "Rain", "rain_sound"), // Update to match your actual resource name
+        AmbientSound("waves", "Waves", "waves_sound"), // Update to match your actual resource name
+        AmbientSound("forest", "Forest", "forest_sound") // Update to match your actual resource name
     )
 
     fun showSoundSelection() {
@@ -44,10 +47,15 @@ class MainViewModel @Inject constructor(
 
     fun selectSound(sound: AmbientSound) {
         viewModelScope.launch {
-            _selectedSound.value = sound
-            soundService.playSound(sound)
-            _isBackgroundPlaying.value = true
-            hideSoundSelection()
+            _isLoading.value = true
+            try {
+                _selectedSound.value = sound
+                soundService.playSound(sound)
+                _isBackgroundPlaying.value = true
+                hideSoundSelection()
+            } finally {
+                _isLoading.value = false
+            }
         }
     }
 

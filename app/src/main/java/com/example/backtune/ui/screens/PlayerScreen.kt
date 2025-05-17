@@ -46,6 +46,7 @@ fun PlayerScreen(
     val volume by viewModel.volume.collectAsState()
     val isBackgroundPlaying by viewModel.isBackgroundPlaying.collectAsState()
     val isSoundSelectionVisible by viewModel.isSoundSelectionVisible.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
     
     var youTubePlayer by remember { mutableStateOf<YouTubePlayer?>(null) }
 
@@ -151,15 +152,20 @@ fun PlayerScreen(
                         }
                         
                         Button(
-                            onClick = { 
-                                Log.d("PlayerScreen", "Opening sound selection")
-                                viewModel.showSoundSelection() 
-                            },
+                            onClick = { viewModel.showSoundSelection() },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = BackTuneColors.Primary
-                            )
+                            ),
+                            enabled = !isLoading
                         ) {
-                            Text(stringResource(R.string.select_sound))
+                            if (isLoading) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(24.dp),
+                                    color = BackTuneColors.TextPrimary
+                                )
+                            } else {
+                                Text(stringResource(R.string.select_sound))
+                            }
                         }
                     }
                 }

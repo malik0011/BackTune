@@ -3,6 +3,7 @@ package com.example.backtune.service
 import android.content.Context
 import android.util.Log
 import androidx.media3.common.MediaItem
+import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import com.example.backtune.model.AmbientSound
@@ -25,6 +26,20 @@ class BackgroundSoundService @Inject constructor(
         exoPlayer = ExoPlayer.Builder(context).build().apply {
             repeatMode = Player.REPEAT_MODE_ALL
             playWhenReady = true
+            addListener(object : Player.Listener {
+                override fun onPlayerError(error: PlaybackException) {
+                    Log.e("BackgroundSoundService", "Player error: ${error.message}", error)
+                }
+                
+                override fun onPlaybackStateChanged(playbackState: Int) {
+                    when (playbackState) {
+                        Player.STATE_READY -> Log.d("BackgroundSoundService", "Player ready")
+                        Player.STATE_BUFFERING -> Log.d("BackgroundSoundService", "Player buffering")
+                        Player.STATE_ENDED -> Log.d("BackgroundSoundService", "Player ended")
+                        Player.STATE_IDLE -> Log.d("BackgroundSoundService", "Player idle")
+                    }
+                }
+            })
         }
     }
 
@@ -39,7 +54,8 @@ class BackgroundSoundService @Inject constructor(
                     context.packageName
                 )
                 
-                Log.d("BackgroundSoundService", "Resource ID for ${sound}: $resourceId")
+                Log.d("BackgroundSoundService", "Attempting to play sound: ${sound.name} (resource: ${sound.resourceName})")
+                Log.d("BackgroundSoundService", "Resource ID: $resourceId")
                 
                 if (resourceId != 0) {
                     // Create MediaItem from raw resource
@@ -55,13 +71,19 @@ class BackgroundSoundService @Inject constructor(
                     player.prepare()
                     player.play()
                     
-                    Log.d("BackgroundSoundService", "Started playing: ${sound.name}")
+                    Log.d("BackgroundSoundService", "Successfully started playing: ${sound.name}")
                 } else {
                     Log.e("BackgroundSoundService", "Resource not found: ${sound.resourceName}")
+                    // You might want to show a user-friendly error message here
                 }
             } catch (e: Exception) {
                 Log.e("BackgroundSoundService", "Error playing sound: ${e.message}", e)
+                // You might want to show a user-friendly error message here
             }
+        } ?: run {
+            Log.e("BackgroundSoundService", "ExoPlayer is null")
+            initializePlayer()
+            playSound(sound) // Retry playing the sound
         }
     }
 

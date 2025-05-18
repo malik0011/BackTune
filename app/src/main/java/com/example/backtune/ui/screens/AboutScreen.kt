@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,6 +31,9 @@ import androidx.compose.ui.unit.dp
 import com.example.backtune.R
 import com.example.backtune.ui.theme.BackTuneColors
 import com.example.backtune.ui.theme.BackTuneTheme
+import android.content.Intent
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.LocalContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,6 +41,7 @@ fun AboutScreen(
     onNavigateBack: () -> Unit,
     onContactMe: () -> Unit
 ) {
+    val context = LocalContext.current
     val scrollState = rememberScrollState()
 
     Column(
@@ -172,7 +177,38 @@ fun AboutScreen(
                 style = MaterialTheme.typography.bodySmall,
                 color = BackTuneColors.TextTertiary
             )
+
             Spacer(modifier = Modifier.height(16.dp))
+
+            // Share Button
+            Button(
+                onClick = {
+                    val shareIntent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        type = "text/plain"
+                        putExtra(Intent.EXTRA_TEXT, "Check out BackTune - Enhance your YouTube experience with ambient sounds! Created by Ayan Malik\n\nConnect with the developer: https://www.linkedin.com/in/ayan-malik-1302a3199/")
+                    }
+                    context.startActivity(Intent.createChooser(shareIntent, "Share BackTune"))
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = BackTuneColors.Primary
+                ),
+                shape = RoundedCornerShape(24.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Share,
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Share BackTune")
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             // Instructions
             Card(
                 modifier = Modifier.fillMaxWidth(),

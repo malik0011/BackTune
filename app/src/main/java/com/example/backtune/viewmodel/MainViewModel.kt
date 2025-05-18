@@ -33,6 +33,7 @@ class MainViewModel @Inject constructor(
     // Available sounds - make sure these match your raw resource names exactly
     val availableSounds = listOf(
         AmbientSound("rain", "Rain", "rain_sound"), // Update to match your actual resource name
+        AmbientSound("long_rain", "Long Rain", "long_rain_sound"), // Update to match your actual resource name
         AmbientSound("waves", "Waves", "waves_sound"), // Update to match your actual resource name
         AmbientSound("forest", "Forest", "forest_sound") // Update to match your actual resource name
     )

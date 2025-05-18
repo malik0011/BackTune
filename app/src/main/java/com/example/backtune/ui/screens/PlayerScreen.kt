@@ -304,6 +304,7 @@ private fun SoundItem(
 ) {
     val icon = when (sound.id) {
         "rain" -> R.drawable.ic_rain
+        "long_rain" -> R.drawable.ic_long_rain
         "waves" -> R.drawable.ic_waves
         "forest" -> R.drawable.ic_forest
         else -> R.drawable.ic_music

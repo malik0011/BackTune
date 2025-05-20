@@ -128,10 +128,32 @@ fun PlayerScreen(
                             player.loadVideo(videoId, currentPlayerPosition)
                         }
 
-                        //update currentPlayerPosition when the video is playing
                         override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) {
                             super.onCurrentSecond(youTubePlayer, second)
                             currentPlayerPosition = second
+                        }
+
+                        override fun onStateChange(youTubePlayer: YouTubePlayer, state: PlayerConstants.PlayerState) {
+                            super.onStateChange(youTubePlayer, state)
+                            when (state) {
+                                PlayerConstants.PlayerState.ENDED -> {
+                                    // Stop background music when video ends
+                                    viewModel.toggleBackgroundPlayback()
+                                }
+                                PlayerConstants.PlayerState.PAUSED -> {
+                                    // Pause background music when video is paused
+                                    if (viewModel.isBackgroundPlaying.value) {
+                                        viewModel.toggleBackgroundPlayback()
+                                    }
+                                }
+                                PlayerConstants.PlayerState.PLAYING -> {
+                                    // Resume background music when video starts playing
+                                    if (!viewModel.isBackgroundPlaying.value && viewModel.selectedSound.value != null) {
+                                        viewModel.toggleBackgroundPlayback()
+                                    }
+                                }
+                                else -> {}
+                            }
                         }
                     })
                 }

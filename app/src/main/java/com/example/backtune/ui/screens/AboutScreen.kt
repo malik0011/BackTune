@@ -54,7 +54,7 @@ fun AboutScreen(
         TopAppBar(
             title = {
                 Text(
-                    text = "About BackTune",
+                    text = stringResource(id = R.string.about_backTune),
                     color = BackTuneColors.TextPrimary
                 )
             },
@@ -110,11 +110,12 @@ fun AboutScreen(
             // Features Section
             FeatureSection(
                 title = "Key Features",
+                //move them to string file
                 features = listOf(
-                    "Add ambient sounds to YouTube videos",
-                    "Customize background sound volume",
-                    "Multiple ambient sound options",
-                    "Easy sharing from YouTube app"
+                    stringResource(id = R.string.feature_ambient_sounds),
+                    stringResource(id = R.string.feature_volume_control),
+                    stringResource(id = R.string.feature_multiple_sounds),
+                    stringResource(id = R.string.feature_easy_sharing)
                 )
             )
 
@@ -132,7 +133,9 @@ fun AboutScreen(
 
             ) {
                 Column(
-                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {

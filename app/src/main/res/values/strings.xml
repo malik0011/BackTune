@@ -26,4 +26,15 @@
     <string name="tip_headphones">Use headphones for the best audio experience</string>
     <string name="tip_volume">Adjust background sound volume to your preference</string>
     <string name="tip_mix">Try different sounds to find your perfect mix</string>
+    <string name="about_backTune">About BackTune</string>
+    <string name="about_description">BackTune is an app that allows you to play YouTube videos with ambient sounds in the background, enhancing your listening experience.</string>
+
+    <string name="feature_ambient_sounds">Add ambient sounds to YouTube videos</string>
+    <string name="feature_volume_control">Customize background sound volume</string>
+    <string name="feature_multiple_sounds">Multiple ambient sound options</string>
+    <string name="feature_easy_sharing">Easy sharing from YouTube app</string>
+
+    <!-- Feedback -->
+    <string name="feedback_title">Feedback</string>
+    <string name="feedback_prompt">We would love to hear your thoughts!</string>
 </resources>

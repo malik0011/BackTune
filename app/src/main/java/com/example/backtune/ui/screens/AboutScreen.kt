@@ -166,7 +166,7 @@ fun AboutScreen(
 
                     ContactButton(
                         icon = Icons.Default.Email,
-                        text = "Contact Me",
+                        text = stringResource(id = R.string.contact_me),
                         onClick = { onContactMe() }
                     )
                 }

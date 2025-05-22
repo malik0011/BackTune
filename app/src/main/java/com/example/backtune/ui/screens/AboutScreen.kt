@@ -207,7 +207,7 @@ fun AboutScreen(
                     modifier = Modifier.size(20.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Share BackTune")
+                Text(stringResource(id = R.string.share_app))
             }
 
             Spacer(modifier = Modifier.height(16.dp))

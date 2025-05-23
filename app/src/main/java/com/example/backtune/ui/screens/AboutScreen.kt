@@ -224,7 +224,7 @@ fun AboutScreen(
                     modifier = Modifier.padding(16.dp)
                 ) {
                     Text(
-                        text = "How to Use",
+                        text = stringResource(id = R.string.how_to_use),
                         style = MaterialTheme.typography.titleLarge,
                         color = BackTuneColors.TextPrimary
                     )

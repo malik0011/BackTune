@@ -206,7 +206,7 @@ fun AboutScreen(
                     contentDescription = null,
                     modifier = Modifier.size(20.dp)
                 )
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(6.dp))
                 Text(stringResource(id = R.string.share_app))
             }
 

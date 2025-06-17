@@ -13,6 +13,6 @@ class BackTuneApplication : Application() {
         FirebaseApp.initializeApp(this)
         
         // Initialize notification scheduler
-        NotificationScheduler.scheduleNotifications(this)
+//        NotificationScheduler.scheduleNotifications(this)
     }
 } 

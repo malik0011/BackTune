@@ -1,0 +1,9 @@
+<!-- res/xml/remote_config_defaults.xml -->
+<defaultsMap>
+    <entry>
+        <key>profile_image_url</key>
+        <value> </value>
+        <key>backtune_playstore_url</key>
+        <value>https://play.google.com/store/apps/</value>
+    </entry>
+</defaultsMap>

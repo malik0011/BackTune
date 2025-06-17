@@ -69,14 +69,6 @@ class MainActivity : ComponentActivity() {
                         }
                     )
 
-//                    // 🧪 Optional: test local notification after delay
-//                    LaunchedEffect(Unit) {
-//                        delay(10000)
-//                        Timber.tag(TAG)
-//                            .d("10-second delay complete (test notification code goes here)")
-//                        // testNotification() // Uncomment if testing local notifications
-//                    }
-
                     // 🔁 Navigation
                     AppNavigation(
                         navController = navController,

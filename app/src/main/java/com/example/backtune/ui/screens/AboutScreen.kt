@@ -34,10 +34,15 @@ import com.example.backtune.ui.theme.BackTuneTheme
 import android.content.Intent
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.LocalContext
+import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutScreen(
+    creatorImageUrl :String,
+    appShareableURL: String,
     onNavigateBack: () -> Unit,
     onContactMe: () -> Unit
 ) {
@@ -139,14 +144,31 @@ fun AboutScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.creator_photo),
-                        contentDescription = "Creator",
-                        modifier = Modifier
-                            .size(100.dp)
-                            .clip(CircleShape),
-                        contentScale = ContentScale.Crop
-                    )
+                    //creator image
+                    if (creatorImageUrl.isEmpty()) {
+                        Image(
+                            painter = painterResource(id = R.drawable.creator_photo),
+                            contentDescription = "Creator",
+                            modifier = Modifier
+                                .size(100.dp)
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+                    } else {
+                        AsyncImage(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data(creatorImageUrl)
+                                .crossfade(true)
+                                .build(),
+                            contentDescription = "Creator Image",
+                            placeholder = painterResource(R.drawable.creator_photo), // your drawable
+                            error = painterResource(R.drawable.creator_photo), // fallback
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .size(100.dp)
+                                .clip(CircleShape)
+                        )
+                    }
 
                     Spacer(modifier = Modifier.height(16.dp))
 
@@ -189,7 +211,11 @@ fun AboutScreen(
                     val shareIntent = Intent().apply {
                         action = Intent.ACTION_SEND
                         type = "text/plain"
-                        putExtra(Intent.EXTRA_TEXT, "Check out BackTune - Enhance your YouTube experience with ambient sounds! Created by Ayan Malik\n\nConnect with the developer: https://www.linkedin.com/in/ayan-malik-1302a3199/")
+                        putExtra(
+                            Intent.EXTRA_TEXT,
+                            "Check out BackTune - Enhance your YouTube experience with ambient sounds!" +
+                                    " Created by Ayan Malik\n\nConnect with the developer:" +
+                                    " ${appShareableURL.ifEmpty {"https://www.linkedin.com/in/ayan-malik-1302a3199/"}}")
                     }
                     context.startActivity(Intent.createChooser(shareIntent, "Share BackTune"))
                 },
@@ -341,6 +367,6 @@ private fun ContactButton(
 @Composable
 private fun PreviewAboutScreen() {
     BackTuneTheme {
-        AboutScreen(onNavigateBack = {}, onContactMe = {})
+        AboutScreen(creatorImageUrl = "",appShareableURL= "", onNavigateBack = {}, onContactMe = {})
     }
 }

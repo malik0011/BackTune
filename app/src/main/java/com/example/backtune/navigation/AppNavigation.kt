@@ -38,6 +38,8 @@ fun AppNavigation(
     sharedIntentViewModel: SharedIntentViewModel = hiltViewModel()
 ) {
     val sharedVideoId by sharedIntentViewModel.sharedVideoId.collectAsState()
+    val creatorImageUrl by sharedIntentViewModel.creatorImageUrl.collectAsState()
+    val appShareableURL by sharedIntentViewModel.appShareableURL.collectAsState()
 
     NavHost(
         navController = navController,
@@ -85,6 +87,8 @@ fun AppNavigation(
         composable(Screen.About.route) {
             val uriHandler = LocalUriHandler.current
             AboutScreen(
+                creatorImageUrl = creatorImageUrl,
+                appShareableURL = appShareableURL,
                 onNavigateBack = {
                     navController.popBackStack()
                 },

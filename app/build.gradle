@@ -20,11 +20,11 @@ if (localPropertiesFile.exists()) {
 }
 
 android {
-    namespace 'com.example.backtune'
+    namespace 'com.ayanmalik.backtune'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.backtune"
+        applicationId "com.ayanmalik.backtune"
         minSdk 26
         targetSdk 34
         versionCode 1
